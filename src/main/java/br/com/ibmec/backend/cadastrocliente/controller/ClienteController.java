@@ -4,6 +4,8 @@ import br.com.ibmec.backend.cadastrocliente.model.Cliente;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -13,28 +15,46 @@ import java.util.ArrayList;
 @RequestMapping("/cliente")
 public class ClienteController {
 
+    private static ArrayList<Cliente> repositorio = new ArrayList<>();
+
     @GetMapping("/listar")
     public String listarCliente(Model model) {
 
-        ArrayList<Cliente> lista = new ArrayList<Cliente>();
-        Cliente cliente = new Cliente();
-        cliente.setNome("Rafael Cruz");
-        cliente.setEmail("teste@teste.com.br");
-        cliente.setCpf("123.456.789-00");
-        cliente.setDataNascimento("10/02/2020");
-
-        lista.add(cliente);
-
-        Cliente cliente2 = new Cliente();
-        cliente2.setNome("Maria");
-        cliente2.setEmail("m@teste.com.br");
-        cliente2.setCpf("111111111");
-        cliente2.setDataNascimento("10/02/2021");
-        lista.add(cliente2);
-
-
-        model.addAttribute("listaCliente" , lista);
+        model.addAttribute("listaCliente" , repositorio);
         return "listar-cliente";
     }
+
+    @GetMapping("/adicionar")
+    public String adicionar(Cliente cliente) {
+        return "salvar";
+    }
+
+    @PostMapping("/salvar")
+    public String salvar(Cliente cliente) {
+        int id = 1;
+        if (repositorio.size() > 0) {
+            Cliente ultimo = repositorio.get(repositorio.size() - 1);
+            id = ultimo.getId() + 1;
+        }
+
+        cliente.setId(id);
+        repositorio.add(cliente);
+        return "redirect:/cliente/listar";
+    }
+
+    @GetMapping("/excluir/{id}")
+    public String excluir(@PathVariable("id") int id) {
+        Cliente clienteASerExcluir = null;
+        for (Cliente item : repositorio) {
+            if (item.getId() == id) {
+                clienteASerExcluir = item;
+            }
+        }
+
+        repositorio.remove(clienteASerExcluir);
+        return "redirect:/cliente/listar";
+
+    }
+
 
 }

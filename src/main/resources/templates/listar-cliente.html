@@ -5,18 +5,27 @@
     <title>Title</title>
 </head>
 <body>
+
+<a href="/cliente/adicionar">Criar novo cliente</a>
+
 <table>
     <tr>
-       <th>Nome</th>
+        <th>Id</th>
+        <th>Nome</th>
         <th>Email</th>
         <th>CPF</th>
         <th>Data de Nascimento</th>
+        <th>Ações</th>
     </tr>
     <tr th:each="cliente: ${listaCliente}">
+        <td th:text="${cliente.id}"></td>
         <td th:text="${cliente.nome}"></td>
         <td th:text="${cliente.email}"></td>
         <td th:text="${cliente.cpf}"></td>
         <td th:text="${cliente.dataNascimento}"></td>
+        <td>
+            <a th:href="@{/cliente/excluir/{id}(id=${cliente.id})}">Excluir</a>
+        </td>
     </tr>
 </table>
 
