@@ -25,6 +25,8 @@
         <td th:text="${cliente.dataNascimento}"></td>
         <td>
             <a th:href="@{/cliente/excluir/{id}(id=${cliente.id})}">Excluir</a>
+            <a th:href="@{/cliente/editar/{id}(id=${cliente.id})}">Editar</a>
+
         </td>
     </tr>
 </table>

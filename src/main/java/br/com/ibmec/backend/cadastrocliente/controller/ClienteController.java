@@ -53,6 +53,38 @@ public class ClienteController {
 
         repositorio.remove(clienteASerExcluir);
         return "redirect:/cliente/listar";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable("id") int id, Model model) {
+        Cliente clienteASerEditado = null;
+        for (Cliente item : repositorio) {
+            if (item.getId() == id) {
+                clienteASerEditado = item;
+                break;
+            }
+        }
+
+        model.addAttribute("cliente", clienteASerEditado);
+        return "editar-cliente";
+    }
+
+    @PostMapping("/atualizar/{id}")
+    public  String atualizar(@PathVariable("id") int id, Cliente newData) {
+        Cliente clienteASerEditado = null;
+        for (Cliente item : repositorio) {
+            if (item.getId() == id) {
+                clienteASerEditado = item;
+                break;
+            }
+        }
+
+        clienteASerEditado.setCpf(newData.getCpf());
+        clienteASerEditado.setNome(newData.getNome());
+        clienteASerEditado.setDataNascimento(newData.getDataNascimento());
+        clienteASerEditado.setEmail(newData.getEmail());
+
+        return "redirect:/cliente/listar";
 
     }
 
