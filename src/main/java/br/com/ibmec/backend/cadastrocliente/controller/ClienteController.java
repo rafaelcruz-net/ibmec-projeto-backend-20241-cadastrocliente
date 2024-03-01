@@ -1,8 +1,10 @@
 package br.com.ibmec.backend.cadastrocliente.controller;
 
 import br.com.ibmec.backend.cadastrocliente.model.Cliente;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +32,12 @@ public class ClienteController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(Cliente cliente) {
+    public String salvar(@Valid Cliente cliente, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "salvar";
+        }
+
         int id = 1;
         if (repositorio.size() > 0) {
             Cliente ultimo = repositorio.get(repositorio.size() - 1);

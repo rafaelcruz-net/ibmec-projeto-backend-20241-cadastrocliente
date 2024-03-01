@@ -9,15 +9,23 @@
 <form action="#" th:action="@{/cliente/salvar}" th:object="${cliente}" method="post">
     <label>Nome</label>
     <input type="text" th:field="*{nome}" id="nome" />
+    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+    <br />
 
     <label>Email</label>
     <input type="text" th:field="*{email}" id="email" />
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <br />
 
     <label>CPF</label>
     <input type="text" th:field="*{cpf}" id="cpf" />
+    <span th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
+    <br />
 
     <label>Data de Nascimento</label>
     <input type="text" th:field="*{dataNascimento}" id="dataNascimento" />
+    <span th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}"></span>
+    <br />
 
     <input type="submit" value="Criar Cliente">
 </form>
